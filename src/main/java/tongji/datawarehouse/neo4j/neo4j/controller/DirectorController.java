@@ -2,7 +2,7 @@ package tongji.datawarehouse.neo4j.neo4j.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tongji.datawarehouse.neo4j.domainclass.Director;
+import tongji.datawarehouse.neo4j.domainclass.node.Director;
 import tongji.datawarehouse.neo4j.repository.DirectorRepository;
 
 
@@ -22,8 +22,9 @@ public class DirectorController {
     public DirectorController(DirectorRepository directorRepository) {
         this.directorRepository = directorRepository;
     }
-    @RequestMapping("/getallDirector")
-    public List<Director> getAllDirctor(){
+
+    @RequestMapping("/getAllDirector")
+    public List<Director> getAllDirector() {
         return directorRepository.getAllDirector();
     }
 }

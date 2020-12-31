@@ -1,7 +1,8 @@
-package tongji.datawarehouse.neo4j.domainclass;
+package tongji.datawarehouse.neo4j.domainclass.node;
 
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
+
+import org.neo4j.ogm.annotation.NodeEntity;
+import tongji.datawarehouse.neo4j.domainclass.node.Product;
 
 /**
  * @Author Wang Wenzheng
@@ -9,12 +10,8 @@ import org.neo4j.ogm.annotation.Id;
  * @Date: Created in 17:01 2020/12/31
  * @Modified By:
  **/
-public class Movie {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String name;
+@NodeEntity(label="Movie")
+public class Movie extends Product {
     private String date;
     private String month;
     private String year;
@@ -37,18 +34,6 @@ public class Movie {
         this.title = title;
         this.genre = genre;
         this.version = version;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDate() {

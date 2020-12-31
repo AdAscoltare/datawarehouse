@@ -1,25 +1,28 @@
-package tongji.datawarehouse.neo4j.domainclass;
+package tongji.datawarehouse.neo4j.domainclass.node;
 
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.NodeEntity;
 
 /**
  * @Author Wang Wenzheng
  * @Description:
- * @Date: Created in 18:11 2020/12/31
+ * @Date: Created in 15:46 2020/12/31
  * @Modified By:
  **/
-public class Actor {
+@NodeEntity(label="Director")
+public class Director {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
 
-    public Actor() {
+    public Director(String name) {
+        this.name = name;
     }
 
-    public Actor(String name) {
-        this.name = name;
+    public Director() {
+
     }
 
     public Long getId() {
@@ -33,4 +36,5 @@ public class Actor {
     public void setName(String name) {
         this.name = name;
     }
+
 }

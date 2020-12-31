@@ -2,7 +2,7 @@ package tongji.datawarehouse.neo4j.repository;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
-import tongji.datawarehouse.neo4j.domainclass.Director;
+import tongji.datawarehouse.neo4j.domainclass.node.Director;
 
 import java.util.List;
 

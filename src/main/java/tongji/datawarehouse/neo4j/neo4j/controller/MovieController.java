@@ -2,7 +2,7 @@ package tongji.datawarehouse.neo4j.neo4j.controller;
 
 import org.springframework.context.annotation.Description;
 import org.springframework.web.bind.annotation.*;
-import tongji.datawarehouse.neo4j.domainclass.Movie;
+import tongji.datawarehouse.neo4j.domainclass.node.Movie;
 import tongji.datawarehouse.neo4j.repository.MovieRepository;
 
 /**

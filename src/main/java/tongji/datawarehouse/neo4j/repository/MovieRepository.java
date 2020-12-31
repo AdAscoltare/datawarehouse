@@ -1,7 +1,7 @@
 package tongji.datawarehouse.neo4j.repository;
 
 import org.springframework.data.neo4j.repository.Neo4jRepository;
-import tongji.datawarehouse.neo4j.domainclass.Movie;
+import tongji.datawarehouse.neo4j.domainclass.node.Movie;
 
 /**
  * @Author Wang Wenzheng

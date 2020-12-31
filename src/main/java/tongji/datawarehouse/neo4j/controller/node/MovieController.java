@@ -1,9 +1,9 @@
-package tongji.datawarehouse.neo4j.neo4j.controller;
+package tongji.datawarehouse.neo4j.controller.node;
 
 import org.springframework.context.annotation.Description;
 import org.springframework.web.bind.annotation.*;
 import tongji.datawarehouse.neo4j.domainclass.node.Movie;
-import tongji.datawarehouse.neo4j.repository.MovieRepository;
+import tongji.datawarehouse.neo4j.repository.node.MovieRepository;
 
 /**
  * @Author Wang Wenzheng
@@ -20,13 +20,13 @@ public class MovieController {
         this.movieRepository = movieRepository;
     }
 
-    @GetMapping("/getMovieByYear")
+    @GetMapping("/getMovieListByYear")
     @Description("根据年份获取全部电影")
     public Iterable<Movie> getMovieListByYear(@RequestParam String year) {
         return movieRepository.getMovieListByYear(year);
     }
 
-    @GetMapping("/getMovieByYearAndMonth")
+    @GetMapping("/getMovieListByYearAndMonth")
     @Description("根据年份获取全部电影")
     public Iterable<Movie> getMovieListByYearAndMonth(@RequestParam String year, @RequestParam String month) {
         return movieRepository.getMovieListByYearAndMonth(year, month);

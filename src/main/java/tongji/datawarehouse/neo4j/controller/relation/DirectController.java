@@ -1,10 +1,10 @@
-package tongji.datawarehouse.neo4j.neo4j.controller;
+package tongji.datawarehouse.neo4j.controller.relation;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tongji.datawarehouse.neo4j.domainclass.relation.Direct;
-import tongji.datawarehouse.neo4j.repository.DirectRepository;
+import tongji.datawarehouse.neo4j.repository.relation.DirectRepository;
 
 import java.util.List;
 

@@ -6,21 +6,22 @@ import org.neo4j.ogm.annotation.Id;
 /**
  * @Author Wang Wenzheng
  * @Description:
- * @Date: Created in 15:46 2020/12/31
+ * @Date: Created in 18:13 2020/12/31
  * @Modified By:
  **/
-public class Director {
+public class User {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
+    private String profileName;
 
-    public Director(String name) {
-        this.name = name;
+    public User() {
     }
 
-    public Director() {
-
+    public User(String name, String profileName) {
+        this.name = name;
+        this.profileName = profileName;
     }
 
     public Long getId() {
@@ -35,4 +36,11 @@ public class Director {
         this.name = name;
     }
 
+    public String getProfileName() {
+        return profileName;
+    }
+
+    public void setProfileName(String profileName) {
+        this.profileName = profileName;
+    }
 }

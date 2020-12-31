@@ -15,15 +15,15 @@ import java.util.List;
  * @Modified By:
  **/
 @RestController
-@RequestMapping("/neo4j/directors")
+@RequestMapping("/neo4j/director")
 public class DirectorController {
     private final DirectorRepository directorRepository;
 
     public DirectorController(DirectorRepository directorRepository) {
         this.directorRepository = directorRepository;
     }
-    @RequestMapping("/getDirectors")
-    public List<Director> getDirctors(){
-        return directorRepository.getDirectors();
+    @RequestMapping("/getallDirector")
+    public List<Director> getAllDirctor(){
+        return directorRepository.getAllDirector();
     }
 }

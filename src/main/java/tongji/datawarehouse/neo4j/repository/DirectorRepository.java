@@ -18,5 +18,5 @@ public interface DirectorRepository extends Neo4jRepository<Director,Long> {
     Iterable<Director> findDirectorByNameLike(String name);
 
     @Query("MATCH (d:Director) RETURN d")
-    List<Director> getDirectors();
+    List<Director> getAllDirector();
 }

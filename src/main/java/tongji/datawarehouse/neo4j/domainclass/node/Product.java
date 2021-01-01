@@ -16,13 +16,15 @@ public class Product {
     @GeneratedValue
     protected Long id;
     protected String name;
-
+    protected String title;
     public Product() {
     }
 
-    public Product(String name) {
+    public Product(String name, String title) {
         this.name = name;
+        this.title = title;
     }
+
 
     public Long getId() {
         return id;
@@ -34,5 +36,13 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

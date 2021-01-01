@@ -1,4 +1,4 @@
-package tongji.datawarehouse.neo4j.domainclass.relation;
+package tongji.datawarehouse.neo4j.domainclass;
 
 import org.neo4j.ogm.annotation.*;
 import tongji.datawarehouse.neo4j.domainclass.node.Product;

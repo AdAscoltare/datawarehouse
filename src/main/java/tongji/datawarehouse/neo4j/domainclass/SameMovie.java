@@ -1,6 +1,8 @@
-package tongji.datawarehouse.neo4j.domainclass.relation;
+package tongji.datawarehouse.neo4j.domainclass;
 
 import org.neo4j.ogm.annotation.*;
+import org.springframework.beans.factory.support.MethodOverride;
+import tongji.datawarehouse.neo4j.domainclass.Movie;
 import tongji.datawarehouse.neo4j.domainclass.node.Product;
 
 /**
@@ -19,12 +21,12 @@ public class SameMovie {
     Product child;
 
     @EndNode
-    Product parent;
+    Movie parent;
 
     public SameMovie() {
     }
 
-    public SameMovie(Product child, Product parent) {
+    public SameMovie(Product child, Movie parent) {
         this.child = child;
         this.parent = parent;
     }
@@ -41,11 +43,11 @@ public class SameMovie {
         this.child = child;
     }
 
-    public Product getParent() {
+    public Movie getParent() {
         return parent;
     }
 
-    public void setParent(Product parent) {
+    public void setParent(Movie parent) {
         this.parent = parent;
     }
 }

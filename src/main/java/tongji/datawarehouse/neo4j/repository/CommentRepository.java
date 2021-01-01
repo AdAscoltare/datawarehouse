@@ -1,9 +1,8 @@
-package tongji.datawarehouse.neo4j.repository.relation;
+package tongji.datawarehouse.neo4j.repository;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
-import tongji.datawarehouse.neo4j.domainclass.relation.Comment;
-import tongji.datawarehouse.neo4j.domainclass.relation.Direct;
+import tongji.datawarehouse.neo4j.domainclass.Comment;
 
 import java.util.List;
 
@@ -14,6 +13,6 @@ import java.util.List;
  * @Modified By:
  **/
 public interface CommentRepository extends Neo4jRepository<Comment,Long> {
-    @Query("MATCH (u:User) -[c:comment]->(m:Movie) return c,collect(u),collect(m)")
-    List<Comment> getALlComment();
+    @Query("MATCH (u:User) -[c:comment]->(m:Movie) where m.realTitle=$realTitle return c,collect(u),collect(m)")
+    List<Comment> getReviewListByRealTitle(String realTitle);
 }

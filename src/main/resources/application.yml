@@ -1,6 +1,8 @@
+server:
+  port: 8765
 spring:
   data:
     neo4j:
-      uri: neo4j://localhost
+      uri: neo4j://119.45.194.177
       username: neo4j
       password: WWZwwz991209

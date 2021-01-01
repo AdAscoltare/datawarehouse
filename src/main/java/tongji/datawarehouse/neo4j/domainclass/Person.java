@@ -1,4 +1,4 @@
-package tongji.datawarehouse.neo4j.domainclass.node;
+package tongji.datawarehouse.neo4j.domainclass;
 
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;

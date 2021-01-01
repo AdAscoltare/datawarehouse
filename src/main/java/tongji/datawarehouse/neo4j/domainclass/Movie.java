@@ -1,4 +1,4 @@
-package tongji.datawarehouse.neo4j.domainclass.node;
+package tongji.datawarehouse.neo4j.domainclass;
 
 
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -12,59 +12,57 @@ import tongji.datawarehouse.neo4j.domainclass.node.Product;
  **/
 @NodeEntity(label="Movie")
 public class Movie extends Product {
-    private String date;
-    private String month;
-    private String year;
-    private String score;
+    private Integer date;
+    private Integer month;
+    private Integer year;
+    private Float score;
     private String realTitle;
-    private String title;
     private String[] genre;
     private String[] version;
 
     public Movie() {
     }
 
-    public Movie(String name, String date, String month, String year, String score, String realTitle, String title, String[] genre, String[] version) {
-        this.name = name;
+    public Movie(String name, String title, Integer date, Integer month, Integer year, Float score, String realTitle, String[] genre, String[] version) {
+        super(name, title);
         this.date = date;
         this.month = month;
         this.year = year;
         this.score = score;
         this.realTitle = realTitle;
-        this.title = title;
         this.genre = genre;
         this.version = version;
     }
 
-    public String getDate() {
+    public Integer getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 
-    public String getMonth() {
+    public Integer getMonth() {
         return month;
     }
 
-    public void setMonth(String month) {
+    public void setMonth(Integer month) {
         this.month = month;
     }
 
-    public String getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
-    public String getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 
@@ -74,14 +72,6 @@ public class Movie extends Product {
 
     public void setRealTitle(String realTitle) {
         this.realTitle = realTitle;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String[] getGenre() {

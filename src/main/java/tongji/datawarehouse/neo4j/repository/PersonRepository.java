@@ -1,7 +1,7 @@
-package tongji.datawarehouse.neo4j.repository.node;
+package tongji.datawarehouse.neo4j.repository;
 
 import org.springframework.data.neo4j.repository.Neo4jRepository;
-import tongji.datawarehouse.neo4j.domainclass.node.Person;
+import tongji.datawarehouse.neo4j.domainclass.Person;
 
 /**
  * @Author Wang Wenzheng

@@ -1,4 +1,4 @@
-package tongji.datawarehouse.neo4j.repository.relation;
+package tongji.datawarehouse.neo4j.repository;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;

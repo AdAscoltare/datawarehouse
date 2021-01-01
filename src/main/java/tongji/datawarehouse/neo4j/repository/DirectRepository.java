@@ -1,4 +1,4 @@
-package tongji.datawarehouse.neo4j.repository.relation;
+package tongji.datawarehouse.neo4j.repository;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
@@ -13,6 +13,6 @@ import java.util.List;
  * @Modified By:
  **/
 public interface DirectRepository extends Neo4jRepository<Direct,Long> {
-    @Query("MATCH (d:Director) -[dir:direct]->(m:Movie) return dir,collect(d),collect(m)")
-    List<Direct> getALlDirect();
+    @Query("MATCH (d1:Director) -[dir1:direct]->(m:Movie)<-[dir2:direct]-(d2:Director) return dir1,dir2,collect(d1),collect(d2),collect(m)")
+    List<Direct> getALlDirectCooperation();
 }

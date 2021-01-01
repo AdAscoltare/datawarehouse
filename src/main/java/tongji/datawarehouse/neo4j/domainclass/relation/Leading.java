@@ -1,8 +1,8 @@
 package tongji.datawarehouse.neo4j.domainclass.relation;
 
 import org.neo4j.ogm.annotation.*;
-import tongji.datawarehouse.neo4j.domainclass.node.Movie;
-import tongji.datawarehouse.neo4j.domainclass.node.Person;
+import tongji.datawarehouse.neo4j.domainclass.Movie;
+import tongji.datawarehouse.neo4j.domainclass.Person;
 
 /**
  * @Author Wang Wenzheng

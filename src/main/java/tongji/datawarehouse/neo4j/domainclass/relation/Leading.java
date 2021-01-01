@@ -1,8 +1,8 @@
 package tongji.datawarehouse.neo4j.domainclass.relation;
 
 import org.neo4j.ogm.annotation.*;
-import tongji.datawarehouse.neo4j.domainclass.node.Actor;
 import tongji.datawarehouse.neo4j.domainclass.node.Movie;
+import tongji.datawarehouse.neo4j.domainclass.node.Person;
 
 /**
  * @Author Wang Wenzheng
@@ -17,14 +17,14 @@ public class Leading {
     private Long id;
 
     @StartNode
-    Actor actor;
+    Person actor;
     @EndNode
     Movie movie;
 
     public Leading() {
     }
 
-    public Leading(Actor actor, Movie movie) {
+    public Leading(Person actor, Movie movie) {
         this.actor = actor;
         this.movie = movie;
     }
@@ -33,11 +33,11 @@ public class Leading {
         return id;
     }
 
-    public Actor getActor() {
+    public Person getActor() {
         return actor;
     }
 
-    public void setActor(Actor actor) {
+    public void setActor(Person actor) {
         this.actor = actor;
     }
 

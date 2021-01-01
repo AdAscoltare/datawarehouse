@@ -1,18 +1,24 @@
 package tongji.datawarehouse.neo4j.controller.node;
 
 import org.springframework.context.annotation.Description;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import tongji.datawarehouse.neo4j.domainclass.node.Movie;
 import tongji.datawarehouse.neo4j.repository.node.MovieRepository;
+
+import java.util.HashMap;
 
 /**
  * @Author Wang Wenzheng
  * @Description:
- * @Date: Created in 17:13 2020/12/31
+ * @Date: Created in 19:06 2021/1/1
  * @Modified By:
  **/
+
 @RestController
-@RequestMapping("/neo4j/movie")
+@RequestMapping("/api/v1/movies/movies")
 public class MovieController {
     private final MovieRepository movieRepository;
 
@@ -20,15 +26,17 @@ public class MovieController {
         this.movieRepository = movieRepository;
     }
 
-    @GetMapping("/getMovieListByYear")
-    @Description("根据年份获取全部电影")
-    public Iterable<Movie> getMovieListByYear(@RequestParam String year) {
-        return movieRepository.getMovieListByYear(year);
-    }
-
-    @GetMapping("/getMovieListByYearAndMonth")
-    @Description("根据年份获取全部电影")
-    public Iterable<Movie> getMovieListByYearAndMonth(@RequestParam String year, @RequestParam String month) {
-        return movieRepository.getMovieListByYearAndMonth(year, month);
+    @RequestMapping(value = "/{pid}",method = RequestMethod.GET)
+    @Description("根据pid查一部电影")
+    public HashMap<String,Object> getMovieByName(@PathVariable("pid") String name){
+        Movie movie= movieRepository.getMovieByName(name);
+        HashMap<String ,Object> res=new HashMap<>();
+        res.put("pid",movie.getName());
+        res.put("movieName",movie.getRealTitle());
+        res.put("score",movie.getScore());
+        res.put("publishYear",movie.getYear());
+        res.put("publishMonth",movie.getMonth());
+        res.put("publishDay",movie.getDate());
+        return res;
     }
 }

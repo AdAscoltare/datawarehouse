@@ -10,8 +10,5 @@ import tongji.datawarehouse.neo4j.domainclass.node.Movie;
  * @Modified By:
  **/
 public interface MovieRepository extends Neo4jRepository<Movie,Long> {
-    Movie getMovieByTitle(String title);
-    Movie getMovieById(Long id);
-    Iterable<Movie> getMovieListByYear(String year);
-    Iterable<Movie> getMovieListByYearAndMonth(String year,String month);
+    Movie getMovieByName(String pid);
 }

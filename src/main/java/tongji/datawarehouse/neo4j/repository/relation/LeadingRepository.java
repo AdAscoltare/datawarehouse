@@ -2,8 +2,6 @@ package tongji.datawarehouse.neo4j.repository.relation;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
-import tongji.datawarehouse.neo4j.domainclass.node.Actor;
-import tongji.datawarehouse.neo4j.domainclass.relation.Direct;
 import tongji.datawarehouse.neo4j.domainclass.relation.Leading;
 
 import java.util.List;

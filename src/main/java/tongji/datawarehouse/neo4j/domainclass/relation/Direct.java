@@ -1,8 +1,8 @@
 package tongji.datawarehouse.neo4j.domainclass.relation;
 
 import org.neo4j.ogm.annotation.*;
-import tongji.datawarehouse.neo4j.domainclass.node.Director;
 import tongji.datawarehouse.neo4j.domainclass.node.Movie;
+import tongji.datawarehouse.neo4j.domainclass.node.Person;
 
 /**
  * @Author Wang Wenzheng
@@ -17,7 +17,7 @@ public class Direct {
     private Long id;
 
     @StartNode
-    private Director director;
+    private Person director;
 
     @EndNode
     private Movie movie;
@@ -25,7 +25,7 @@ public class Direct {
     public Direct() {
     }
 
-    public Direct(Director director, Movie movie) {
+    public Direct(Person director, Movie movie) {
         this.director = director;
         this.movie = movie;
     }
@@ -34,11 +34,11 @@ public class Direct {
         return id;
     }
 
-    public Director getDirector() {
+    public Person getDirector() {
         return director;
     }
 
-    public void setDirector(Director director) {
+    public void setDirector(Person director) {
         this.director = director;
     }
 

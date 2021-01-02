@@ -1,5 +1,6 @@
 package tongji.datawarehouse.neo4j.controller;
 
+import io.swagger.annotations.Api;
 import org.springframework.context.annotation.Description;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -36,9 +36,9 @@ public class ConditionQueryController {
     public HashMap<String, Object> getMovieByConditions(
             @RequestParam(required = false, defaultValue = "") String title,
             @RequestParam(required = false, defaultValue = "0.0") String scoreLargerThan,
-            @RequestParam(required = false, defaultValue = "5.0") String scoreLessThan,
-            @RequestParam(required = false, defaultValue = "1971-01-01") String startTime,
-            @RequestParam(required = false, defaultValue = "2020-01-01") String endTime,
+            @RequestParam(required = false, defaultValue = "5.1") String scoreLessThan,
+            @RequestParam(required = false, defaultValue = "1000-32-32") String startTime,
+            @RequestParam(required = false, defaultValue = "1000-32-32") String endTime,
             @RequestParam(required = false, defaultValue = "default") String genre,
             @RequestParam(required = false, defaultValue = "default") String actor,
             @RequestParam(required = false, defaultValue = "default") String leadActor,
@@ -52,21 +52,149 @@ public class ConditionQueryController {
         String endYear = endTime.substring(0, 4);
         String endMonth = endTime.substring(5, 7);
         String endDate = endTime.substring(8, 10);
-        List<Movie> movies = movieRepository.getMoviesByConditions(
-                title,
-                Float.parseFloat(scoreLargerThan),
-                Float.parseFloat(scoreLessThan),
-                Integer.parseInt(startYear),
-                Integer.parseInt(startMonth),
-                Integer.parseInt(startDate),
-                Integer.parseInt(endYear),
-                Integer.parseInt(endMonth),
-                Integer.parseInt(endDate),
-                genre,
-                actor,
-                leadActor,
-                director
-        );
+
+        HashMap<String, Object> res = new HashMap<>();
+        List<HashMap<String, Object>> movieList = new ArrayList<>();
+        //不查询角色
+        //000
+        if (actor.equals("default") && director.equals("default") && leadActor.equals("default")) {
+            List<Movie> movies = movieRepository.getMoviesByConditionsWithoutALD(
+                    title,
+                    Float.parseFloat(scoreLargerThan),
+                    Float.parseFloat(scoreLessThan),
+                    Integer.parseInt(startYear),
+                    Integer.parseInt(startMonth),
+                    Integer.parseInt(startDate),
+                    Integer.parseInt(endYear),
+                    Integer.parseInt(endMonth),
+                    Integer.parseInt(endDate),
+                    genre
+            );
+            makeMovieItem(movieList, movies);
+            //如果查询主演
+            //001
+        } else if (actor.equals("default") && director.equals("default") && !leadActor.equals("default")) {
+            List<Movie> movies = movieRepository.getMoviesByConditionsWithL(
+                    title,
+                    Float.parseFloat(scoreLargerThan),
+                    Float.parseFloat(scoreLessThan),
+                    Integer.parseInt(startYear),
+                    Integer.parseInt(startMonth),
+                    Integer.parseInt(startDate),
+                    Integer.parseInt(endYear),
+                    Integer.parseInt(endMonth),
+                    Integer.parseInt(endDate),
+                    genre,
+                    leadActor
+            );
+            makeMovieItem(movieList, movies);
+            //如果查询参演
+            //100
+        } else if (!actor.equals("default") && director.equals("default") && leadActor.equals("default")) {
+            List<Movie> movies = movieRepository.getMoviesByConditionsWithA(
+                    title,
+                    Float.parseFloat(scoreLargerThan),
+                    Float.parseFloat(scoreLessThan),
+                    Integer.parseInt(startYear),
+                    Integer.parseInt(startMonth),
+                    Integer.parseInt(startDate),
+                    Integer.parseInt(endYear),
+                    Integer.parseInt(endMonth),
+                    Integer.parseInt(endDate),
+                    genre,
+                    actor
+            );
+            makeMovieItem(movieList, movies);
+            //如果查询导演
+            //010
+        } else if (actor.equals("default") && !director.equals("default") && leadActor.equals("default")) {
+            List<Movie> movies = movieRepository.getMoviesByConditionsWithD(
+                    title,
+                    Float.parseFloat(scoreLargerThan),
+                    Float.parseFloat(scoreLessThan),
+                    Integer.parseInt(startYear),
+                    Integer.parseInt(startMonth),
+                    Integer.parseInt(startDate),
+                    Integer.parseInt(endYear),
+                    Integer.parseInt(endMonth),
+                    Integer.parseInt(endDate),
+                    genre,
+                    director
+            );
+            makeMovieItem(movieList, movies);
+            //如果查询参演和导演
+            //110
+        }else if (!actor.equals("default") && !director.equals("default") && leadActor.equals("default")) {
+            List<Movie> movies = movieRepository.getMoviesByConditionsWithAD(
+                    title,
+                    Float.parseFloat(scoreLargerThan),
+                    Float.parseFloat(scoreLessThan),
+                    Integer.parseInt(startYear),
+                    Integer.parseInt(startMonth),
+                    Integer.parseInt(startDate),
+                    Integer.parseInt(endYear),
+                    Integer.parseInt(endMonth),
+                    Integer.parseInt(endDate),
+                    genre,
+                    actor,
+                    director
+            );
+            makeMovieItem(movieList, movies);
+            //101
+        }else if (!actor.equals("default") && director.equals("default") && !leadActor.equals("default")) {
+            List<Movie> movies = movieRepository.getMoviesByConditionsWithAL(
+                    title,
+                    Float.parseFloat(scoreLargerThan),
+                    Float.parseFloat(scoreLessThan),
+                    Integer.parseInt(startYear),
+                    Integer.parseInt(startMonth),
+                    Integer.parseInt(startDate),
+                    Integer.parseInt(endYear),
+                    Integer.parseInt(endMonth),
+                    Integer.parseInt(endDate),
+                    genre,
+                    actor,
+                    leadActor
+            );
+            makeMovieItem(movieList, movies);
+            //011
+        }else if (actor.equals("default") && !director.equals("default") && !leadActor.equals("default")) {
+            List<Movie> movies = movieRepository.getMoviesByConditionsWithDL(
+                    title,
+                    Float.parseFloat(scoreLargerThan),
+                    Float.parseFloat(scoreLessThan),
+                    Integer.parseInt(startYear),
+                    Integer.parseInt(startMonth),
+                    Integer.parseInt(startDate),
+                    Integer.parseInt(endYear),
+                    Integer.parseInt(endMonth),
+                    Integer.parseInt(endDate),
+                    genre,
+                    director,
+                    leadActor
+            );
+            makeMovieItem(movieList, movies);
+            //111
+        }else if (!actor.equals("default") && !director.equals("default") && !leadActor.equals("default")) {
+            List<Movie> movies = movieRepository.getMoviesByConditionsWithADL(
+                    title,
+                    Float.parseFloat(scoreLargerThan),
+                    Float.parseFloat(scoreLessThan),
+                    Integer.parseInt(startYear),
+                    Integer.parseInt(startMonth),
+                    Integer.parseInt(startDate),
+                    Integer.parseInt(endYear),
+                    Integer.parseInt(endMonth),
+                    Integer.parseInt(endDate),
+                    genre,
+                    actor,
+                    director,
+                    leadActor
+            );
+            makeMovieItem(movieList, movies);
+        }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         HashMap<String, Object> params = new HashMap<>();
         params.put("title", title);
         params.put("scoreLargerThan", Float.parseFloat(scoreLargerThan));
@@ -79,10 +207,13 @@ public class ConditionQueryController {
         params.put("endDate", Integer.parseInt(endDate));
         params.put("genre", genre);
 
+        res.put("count", movieList.size());
+        res.put("movieList", movieList);
+        res.put("params", params);
+        return res;
+    }
 
-        HashMap<String, Object> res = new HashMap<>();
-
-        List<HashMap<String, Object>> movieList = new ArrayList<>();
+    private void makeMovieItem(List<HashMap<String, Object>> movieList, List<Movie> movies) {
         for (Movie movie : movies) {
             HashMap<String, Object> t = new HashMap<>();
             t.put("pid", movie.getName());
@@ -93,9 +224,5 @@ public class ConditionQueryController {
             t.put("publishDay", movie.getDate());
             movieList.add(t);
         }
-        res.put("count", movies.size());
-        res.put("movieList", movieList);
-        res.put("params", params);
-        return res;
     }
 }

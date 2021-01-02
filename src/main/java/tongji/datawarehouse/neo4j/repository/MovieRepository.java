@@ -18,23 +18,147 @@ public interface MovieRepository extends Neo4jRepository<Movie, Long> {
 
     Movie getMovieByRealTitle(String realTitle);
 
-    @Query("MATCH (m:Movie),(a:Actor),(a2:Actor),(d:Director)" +
-            "WHERE m.realTitle CONTAINS $title AND " +
-            "m.score>=$scoreLargerThan AND " +
-            "m.score<=$scoreLessThan AND " +
-            "(m.year>$startYear OR " +
-            "(m.month>=$startMonth AND m.year=$startYear) OR " +
-            "(m.date>=$startDate AND m.month=$startMonth AND m.year=$startYear)) AND" +
-            "(m.year<$endYear OR " +
-            "(m.month<=$endMonth AND m.year=$endYear) OR " +
-            "(m.date<=$endDate AND m.month=$endMonth AND m.year=$endYear)) AND " +
-            "($genre='default' OR $genre IN m.genre ) AND " +
-            "($actor='default' OR exists((a:Actor{name:$actor})-[:play_in]-(m:Movie))) AND " +
-            "($leadActor='default' OR exists((a2:Actor{name:$leadActor})-[:leading]-(m:Movie))) AND " +
-            "($director='default' OR exists((d:Director{name:$director})-[:direct]-(m:Movie))) AND " +
-            "1<>2 " +
-            "RETURN m")
-    List<Movie> getMoviesByConditions(
+    //没有角色查询
+    @Query(
+            "MATCH(m:Movie)" +
+                    "WHERE" +
+                    "($title='' OR m.realTitle = $title) AND " +
+
+                    "($scoreLargerThan<0.01 OR m.score>=$scoreLargerThan) AND " +
+                    "($scoreLessThan>5.0 OR m.score<=$scoreLessThan) AND " +
+
+                    "(($startYear=1000 OR m.year>$startYear) OR " +
+                    "($startMonth=32 OR m.month>=$startMonth AND m.year=$startYear) OR " +
+                    "($startDate=32 OR m.date>=$startDate AND m.month=$startMonth AND m.year=$startYear)) AND" +
+                    "(($endYear=1000 OR m.year<$endYear) OR " +
+                    "($endMonth=32 OR m.month<=$endMonth AND m.year=$endYear) OR " +
+                    "($endDate=32 OR m.date<=$endDate AND m.month=$endMonth AND m.year=$endYear)) AND " +
+                    "($genre='default' OR $genre IN m.genre )" +
+                    "RETURN m")
+    List<Movie> getMoviesByConditionsWithoutALD(
+            String title,
+            Float scoreLargerThan,
+            Float scoreLessThan,
+            Integer startYear,
+            Integer startMonth,
+            Integer startDate,
+            Integer endYear,
+            Integer endMonth,
+            Integer endDate,
+            String genre
+    );
+
+    //查询主演
+    @Query(
+            "MATCH(m:Movie)-[:leading]-(:Actor{name:$leadActor})" +
+                    "WHERE" +
+                    "($title='' OR m.realTitle = $title) AND " +
+
+                    "($scoreLargerThan<0.01 OR m.score>=$scoreLargerThan) AND " +
+                    "($scoreLessThan>5.0 OR m.score<=$scoreLessThan) AND " +
+
+                    "(($startYear=1000 OR m.year>$startYear) OR " +
+                    "($startMonth=32 OR m.month>=$startMonth AND m.year=$startYear) OR " +
+                    "($startDate=32 OR m.date>=$startDate AND m.month=$startMonth AND m.year=$startYear)) AND" +
+                    "(($endYear=1000 OR m.year<$endYear) OR " +
+                    "($endMonth=32 OR m.month<=$endMonth AND m.year=$endYear) OR " +
+                    "($endDate=32 OR m.date<=$endDate AND m.month=$endMonth AND m.year=$endYear)) AND " +
+                    "($genre='default' OR $genre IN m.genre )" +
+                    "RETURN m")
+    List<Movie> getMoviesByConditionsWithL(
+            String title,
+            Float scoreLargerThan,
+            Float scoreLessThan,
+            Integer startYear,
+            Integer startMonth,
+            Integer startDate,
+            Integer endYear,
+            Integer endMonth,
+            Integer endDate,
+            String genre,
+            String leadActor
+    );
+    //查询出演
+    @Query(
+            "MATCH(m:Movie)-[:play_in]-(:Actor{name:$actor})" +
+                    "WHERE" +
+                    "($title='' OR m.realTitle = $title) AND " +
+
+                    "($scoreLargerThan<0.01 OR m.score>=$scoreLargerThan) AND " +
+                    "($scoreLessThan>5.0 OR m.score<=$scoreLessThan) AND " +
+
+                    "(($startYear=1000 OR m.year>$startYear) OR " +
+                    "($startMonth=32 OR m.month>=$startMonth AND m.year=$startYear) OR " +
+                    "($startDate=32 OR m.date>=$startDate AND m.month=$startMonth AND m.year=$startYear)) AND" +
+                    "(($endYear=1000 OR m.year<$endYear) OR " +
+                    "($endMonth=32 OR m.month<=$endMonth AND m.year=$endYear) OR " +
+                    "($endDate=32 OR m.date<=$endDate AND m.month=$endMonth AND m.year=$endYear)) AND " +
+                    "($genre='default' OR $genre IN m.genre )" +
+                    "RETURN m")
+    List<Movie> getMoviesByConditionsWithA(
+            String title,
+            Float scoreLargerThan,
+            Float scoreLessThan,
+            Integer startYear,
+            Integer startMonth,
+            Integer startDate,
+            Integer endYear,
+            Integer endMonth,
+            Integer endDate,
+            String genre,
+            String actor
+    );
+
+    //查询导演
+    @Query(
+            "MATCH(m:Movie)-[:direct]-(:Director{name:$director})" +
+                    "WHERE" +
+                    "($title='' OR m.realTitle = $title) AND " +
+
+                    "($scoreLargerThan<0.01 OR m.score>=$scoreLargerThan) AND " +
+                    "($scoreLessThan>5.0 OR m.score<=$scoreLessThan) AND " +
+
+                    "(($startYear=1000 OR m.year>$startYear) OR " +
+                    "($startMonth=32 OR m.month>=$startMonth AND m.year=$startYear) OR " +
+                    "($startDate=32 OR m.date>=$startDate AND m.month=$startMonth AND m.year=$startYear)) AND" +
+                    "(($endYear=1000 OR m.year<$endYear) OR " +
+                    "($endMonth=32 OR m.month<=$endMonth AND m.year=$endYear) OR " +
+                    "($endDate=32 OR m.date<=$endDate AND m.month=$endMonth AND m.year=$endYear)) AND " +
+                    "($genre='default' OR $genre IN m.genre )" +
+                    "RETURN m")
+    List<Movie> getMoviesByConditionsWithD(
+            String title,
+            Float scoreLargerThan,
+            Float scoreLessThan,
+            Integer startYear,
+            Integer startMonth,
+            Integer startDate,
+            Integer endYear,
+            Integer endMonth,
+            Integer endDate,
+            String genre,
+            String director
+    );
+
+    //查询参演和导演
+    @Query(
+            "MATCH(m:Movie)-[:direct]-(:Director{name:$director})" +
+                    "with m match (m)-[:play_in]-(:Actor{name:$actor})"+
+                    "WHERE" +
+                    "($title='' OR m.realTitle = $title) AND " +
+
+                    "($scoreLargerThan<0.01 OR m.score>=$scoreLargerThan) AND " +
+                    "($scoreLessThan>5.0 OR m.score<=$scoreLessThan) AND " +
+
+                    "(($startYear=1000 OR m.year>$startYear) OR " +
+                    "($startMonth=32 OR m.month>=$startMonth AND m.year=$startYear) OR " +
+                    "($startDate=32 OR m.date>=$startDate AND m.month=$startMonth AND m.year=$startYear)) AND" +
+                    "(($endYear=1000 OR m.year<$endYear) OR " +
+                    "($endMonth=32 OR m.month<=$endMonth AND m.year=$endYear) OR " +
+                    "($endDate=32 OR m.date<=$endDate AND m.month=$endMonth AND m.year=$endYear)) AND " +
+                    "($genre='default' OR $genre IN m.genre )" +
+                    "RETURN m")
+    List<Movie> getMoviesByConditionsWithAD(
             String title,
             Float scoreLargerThan,
             Float scoreLessThan,
@@ -46,8 +170,106 @@ public interface MovieRepository extends Neo4jRepository<Movie, Long> {
             Integer endDate,
             String genre,
             String actor,
-            String leadActor,
             String director
     );
 
+    //查询参演和主演
+    @Query(
+            "MATCH(m:Movie)-[:leading]-(:Actor{name:$leadActor})" +
+                    "with m match (m)-[:play_in]-(:Actor{name:$actor})"+
+                    "WHERE" +
+                    "($title='' OR m.realTitle = $title) AND " +
+
+                    "($scoreLargerThan<0.01 OR m.score>=$scoreLargerThan) AND " +
+                    "($scoreLessThan>5.0 OR m.score<=$scoreLessThan) AND " +
+
+                    "(($startYear=1000 OR m.year>$startYear) OR " +
+                    "($startMonth=32 OR m.month>=$startMonth AND m.year=$startYear) OR " +
+                    "($startDate=32 OR m.date>=$startDate AND m.month=$startMonth AND m.year=$startYear)) AND" +
+                    "(($endYear=1000 OR m.year<$endYear) OR " +
+                    "($endMonth=32 OR m.month<=$endMonth AND m.year=$endYear) OR " +
+                    "($endDate=32 OR m.date<=$endDate AND m.month=$endMonth AND m.year=$endYear)) AND " +
+                    "($genre='default' OR $genre IN m.genre )" +
+                    "RETURN m")
+    List<Movie> getMoviesByConditionsWithAL(
+            String title,
+            Float scoreLargerThan,
+            Float scoreLessThan,
+            Integer startYear,
+            Integer startMonth,
+            Integer startDate,
+            Integer endYear,
+            Integer endMonth,
+            Integer endDate,
+            String genre,
+            String actor,
+            String leadActor
+    );
+
+    //查询导演和主演
+    @Query(
+            "MATCH(m:Movie)-[:leading]-(:Actor{name:$leadActor})" +
+                    "with m match (m)-[:direct]-(:Director{name:$director})"+
+                    "WHERE" +
+                    "($title='' OR m.realTitle = $title) AND " +
+
+                    "($scoreLargerThan<0.01 OR m.score>=$scoreLargerThan) AND " +
+                    "($scoreLessThan>5.0 OR m.score<=$scoreLessThan) AND " +
+
+                    "(($startYear=1000 OR m.year>$startYear) OR " +
+                    "($startMonth=32 OR m.month>=$startMonth AND m.year=$startYear) OR " +
+                    "($startDate=32 OR m.date>=$startDate AND m.month=$startMonth AND m.year=$startYear)) AND" +
+                    "(($endYear=1000 OR m.year<$endYear) OR " +
+                    "($endMonth=32 OR m.month<=$endMonth AND m.year=$endYear) OR " +
+                    "($endDate=32 OR m.date<=$endDate AND m.month=$endMonth AND m.year=$endYear)) AND " +
+                    "($genre='default' OR $genre IN m.genre )" +
+                    "RETURN m")
+    List<Movie> getMoviesByConditionsWithDL(
+            String title,
+            Float scoreLargerThan,
+            Float scoreLessThan,
+            Integer startYear,
+            Integer startMonth,
+            Integer startDate,
+            Integer endYear,
+            Integer endMonth,
+            Integer endDate,
+            String genre,
+            String director,
+            String leadActor
+    );
+    //全查
+    @Query(
+            "MATCH(m:Movie)-[:leading]-(:Actor{name:$leadActor})" +
+                    "with m match (m)-[:direct]-(:Director{name:$director})"+
+                    "with m match (m)-[:play_in]-(:Actor{name:$actor})"+
+                    "WHERE" +
+                    "($title='' OR m.realTitle = $title) AND " +
+
+                    "($scoreLargerThan<0.01 OR m.score>=$scoreLargerThan) AND " +
+                    "($scoreLessThan>5.0 OR m.score<=$scoreLessThan) AND " +
+
+                    "(($startYear=1000 OR m.year>$startYear) OR " +
+                    "($startMonth=32 OR m.month>=$startMonth AND m.year=$startYear) OR " +
+                    "($startDate=32 OR m.date>=$startDate AND m.month=$startMonth AND m.year=$startYear)) AND" +
+                    "(($endYear=1000 OR m.year<$endYear) OR " +
+                    "($endMonth=32 OR m.month<=$endMonth AND m.year=$endYear) OR " +
+                    "($endDate=32 OR m.date<=$endDate AND m.month=$endMonth AND m.year=$endYear)) AND " +
+                    "($genre='default' OR $genre IN m.genre )" +
+                    "RETURN m")
+    List<Movie> getMoviesByConditionsWithADL(
+            String title,
+            Float scoreLargerThan,
+            Float scoreLessThan,
+            Integer startYear,
+            Integer startMonth,
+            Integer startDate,
+            Integer endYear,
+            Integer endMonth,
+            Integer endDate,
+            String genre,
+            String actor,
+            String director,
+            String leadActor
+    );
 }

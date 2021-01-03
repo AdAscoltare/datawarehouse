@@ -44,4 +44,35 @@ public class MovieVersionQueryController {
         res.put("movieList",movielist);
         return res;
     }
+    @RequestMapping(value = "/sameMovies",method = RequestMethod.GET)
+    @Description("根据电影pid获取相同页面的并查集")
+    public HashMap<String ,Object> getAllSameMovieByPid(@RequestParam String pid){
+        List<SameMovie> sameMovieList= sameMovieRepository.getALlSameMovieByPid(pid);
+        HashMap<String ,Object> res=new HashMap<>();
+        res.put("count",sameMovieList.size()+1);
+
+        List<HashMap<String,Object>> movielist=new ArrayList<>();
+        if(sameMovieList.size()>=1){
+            HashMap<String ,Object> temp=new HashMap<>();
+            temp.put("pid",sameMovieList.get(0).getParent().getName());
+            temp.put("movieName",sameMovieList.get(0).getParent().getTitle());
+            temp.put("score",sameMovieList.get(0).getParent().getScore());
+            temp.put("publishYear",sameMovieList.get(0).getParent().getYear());
+            temp.put("publishMonth",sameMovieList.get(0).getParent().getMonth());
+            temp.put("publishDay",sameMovieList.get(0).getParent().getDate());
+            movielist.add(temp);
+        }
+        for (SameMovie child :sameMovieList){
+            HashMap<String ,Object> temp=new HashMap<>();
+            temp.put("pid",child.getChild().getName());
+            temp.put("movieName",child.getChild().getTitle());
+            temp.put("score",child.getParent().getScore());
+            temp.put("publishYear",child.getParent().getYear());
+            temp.put("publishMonth",child.getParent().getMonth());
+            temp.put("publishDay",child.getParent().getDate());
+            movielist.add(temp);
+        }
+        res.put("movieList",movielist);
+        return res;
+    }
 }

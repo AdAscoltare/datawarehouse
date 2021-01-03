@@ -12,7 +12,13 @@ import java.util.List;
  * @Date: Created in 18:25 2020/12/31
  * @Modified By:
  **/
-public interface SameMovieRepository extends Neo4jRepository<SameMovie,Long> {
-    @Query("MATCH (c:Product) -[s:same_movie]->(p:Product) where p.realTitle= $realTitle return s,collect(c),collect(p)")
+public interface SameMovieRepository extends Neo4jRepository<SameMovie, Long> {
+    @Query("MATCH (c:Product) -[s:same_movie]->(p:Product) WHERE p.realTitle= $realTitle RETURN s,collect(c),collect(p)")
     List<SameMovie> getALlSameMovieByTitle(String realTitle);
+
+    @Query("MATCH (c:Product) -[s:same_movie]->(p:Product) WHERE p.name= $pid OR c.name=$pid " +
+            "WITH p " +
+            "MATCH (c1:Product)-[s1:same_movie]->(p) " +
+            "RETURN s1,collect(p),collect(c1)")
+    List<SameMovie> getALlSameMovieByPid(String pid);
 }
